@@ -1,0 +1,17 @@
+<div class="vehicle-list-container">
+    <h3 class="title">Popis vozila</h3>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let vehicle of vehicles" (click)="selectVehicle(vehicle)">
+        <span class="registration">{{ vehicle.registration }}</span>
+        <span class="chassis-number">{{ vehicle.chassisNumber }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="vehicle-details-container" *ngIf="selectedVehicle">
+    <h3 class="title">Detalji o "{{ selectedVehicle?.registration }}"</h3>
+    <div class="details">
+      <p>Max broj putnika: {{ selectedVehicle?.maxNumberOfPassengers }}</p>
+      <p>Mjenjač: {{ selectedVehicle?.transmission }}</p>
+    </div>
+  </div>
