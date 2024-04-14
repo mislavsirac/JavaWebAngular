@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Vehicle } from '../models/vehicle';
 
@@ -7,39 +8,21 @@ import { Vehicle } from '../models/vehicle';
   providedIn: 'root'
 })
 export class VehicleService {
-  private mockVehicles: Vehicle[] = [
-    {
-      maxNumberOfPassengers: 5,
-      transmission: 'Automatic',
-      airConditioning: true,
-      numberOfDoors: 4,
-      fuelType: 'Petrol',
-      registration: 'AB123CDE',
-      chassisNumber: 'JKGANLKAGNLKGASASD'
-    },
-    {
-      maxNumberOfPassengers: 5,
-      transmission: 'Manual',
-      airConditioning: true,
-      numberOfDoors: 4,
-      fuelType: 'Diesel',
-      registration: 'ZX987ZXY',
-      chassisNumber: 'MNLDSAKDDSADASLM'
-    },
-    {
-      maxNumberOfPassengers: 5,
-      transmission: 'Manual',
-      airConditioning: true,
-      numberOfDoors: 4,
-      fuelType: 'Diesel',
-      registration: 'GH944ZHG',
-      chassisNumber: 'POIWQIPOWQTPI'
-    }
-  ];
-
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getVozila(): Observable<Vehicle[]> {
-    return of(this.mockVehicles);
+    return this.http.get<Vehicle[]>('http://localhost:8080/vehicles');
   }
+
+  getVehicleById(id: string): Observable<Vehicle | undefined> {
+    return this.http.get<Vehicle>('http://localhost:8080/vehicles/search/registration/' + id);
+  }
+
+  addVehicle(newVehicle: Vehicle) {
+    return this.http.post('http://localhost:8080/vehicles', newVehicle, { responseType: 'text' });
+  }
+
+  deleteVehicle(vehicleId: string) {
+    return this.http.delete<Vehicle>('http://localhost:8080/vehicles/' + vehicleId);
+  }  
 }

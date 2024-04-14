@@ -1,0 +1,8 @@
+<div class="vehicle-details-container" ngIf="vehicle">
+    <h3 class="title">Detalji o "{{ vehicle?.registration }}"</h3>
+    <div class="details">
+      <p>Max broj putnika: {{ vehicle?.maxNumberOfPassengers }}</p>
+      <p>Mjenjač: {{ vehicle?.transmission }}</p>
+    </div>
+  </div>
+  <button (click)="goToVehicles()">Go to Vehicle List</button>
